@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KIM MINJUN | Portfolio Media Archive</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+    
+    <style>
+        /* 1. 디자인 시스템 정의 (이력서 페이지와 완벽한 시각적 통일성 유지) */
+        :root {
+            --bg-color: #050505;
+            --surface-color: rgba(20, 20, 25, 0.7);
+            --surface-hover: rgba(30, 30, 40, 0.9);
+            --text-main: #ffffff;
+            --text-sub: #a1a1aa;
+            --accent-purple: #8b5cf6;
+            --accent-pink: #ec4899;
+            --accent-blue: #3b82f6;
+            --accent-gradient: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+            --font-main: 'Pretendard', sans-serif;
+            --font-title: 'Urbanist', sans-serif;
+        }
+
+        /* 2. 초기화 및 기본 스타일 */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* 3. 일렁이는 오로라 백그라운드 효과 */
+        .aurora-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            background: #050505;
+        }
+        .aurora {
+            position: absolute;
+            width: 700px; height: 700px;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.15;
+            animation: aurora-float 25s infinite alternate ease-in-out;
+        }
+        .aurora-1 { background: var(--accent-purple); top: -20%; right: -10%; animation-delay: 0s; }
+        .aurora-2 { background: var(--accent-blue); bottom: -10%; left: -10%; animation-delay: -7s; }
+
+        @keyframes aurora-float {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(-100px, 80px) scale(1.15); }
+        }
+
+        /* 4. 네비게이션 헤더 */
+        nav {
+            position: fixed; top: 0; width: 100%; height: 80px;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 4rem; z-index: 100;
+            background: rgba(5, 5, 5, 0.6); backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .logo { font-family: var(--font-title); font-weight: 800; font-size: 1.4rem; letter-spacing: -1px; }
+        .back-btn {
+            font-size: 0.85rem; color: var(--text-sub); text-decoration: none;
+            padding: 0.4rem 1rem; border-radius: 50px; border: 1px solid rgba(255,255,255,0.1);
+            transition: 0.3s;
+        }
+        .back-btn:hover { color: var(--text-main); background: rgba(255,255,255,0.05); border-color: var(--text-main); }
+
+        /* 5. 타이틀 레이아웃 */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+        .archive-header { padding-top: 8rem; margin-bottom: 4rem; text-align: left; }
+        .archive-header h1 { font-size: 3rem; font-weight: 800; letter-spacing: -1.5px; margin-bottom: 1rem; }
+        .archive-header h1 span { background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .archive-header p { color: var(--text-sub); font-size: 1.1rem; max-width: 600px; }
+
+        /* 6. 카테고리 필터 탭 */
+        .filter-tabs { display: flex; gap: 1rem; margin-bottom: 3rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 1rem; }
+        .tab-btn {
+            background: none; border: none; color: var(--text-sub); font-size: 0.95rem; font-weight: 600;
+            padding: 0.5rem 1.5rem; cursor: pointer; border-radius: 8px; transition: 0.3s;
+        }
+        .tab-btn:hover { color: var(--text-main); background: rgba(255,255,255,0.03); }
+        .tab-btn.active { color: var(--text-main); background: rgba(139, 92, 246, 0.15); border: 1px solid rgba(139, 92, 246, 0.3); }
+
+        /* 7. 미디어 아카이브 그리드 시스템 */
+        .media-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2.5rem; margin-bottom: 8rem; }
+        .media-card {
+            background: var(--surface-color); border-radius: 20px; border: 1px solid rgba(255,255,255,0.05);
+            overflow: hidden; backdrop-filter: blur(15px); transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            cursor: pointer; display: flex; flex-direction: column; position: relative;
+        }
+        .media-card:hover {
+            transform: translateY(-10px); border-color: rgba(255,255,255,0.2);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4); background: var(--surface-hover);
+        }
+
+        /* 8. 미리보기 썸네일 프레임 */
+        .thumbnail-frame {
+            width: 100%; height: 220px; position: relative; background: #111115;
+            display: flex; align-items: center; justify-content: center; overflow: hidden;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .thumbnail-frame img { width: 100%; height: 100%; object-fit: cover; opacity: 0.7; transition: 0.5s; }
+        .media-card:hover .thumbnail-frame img { opacity: 0.9; transform: scale(1.03); }
+
+        /* 동영상 전용 재생 아이콘 레이어 */
+        .play-overlay {
+            position: absolute; width: 60px; height: 60px; background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.3); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; z-index: 2;
+            transition: 0.3s;
+        }
+        .play-overlay::after {
+            content: ''; display: block; width: 0; height: 0;
+            border-top: 10px solid transparent; border-bottom: 10px solid transparent;
+            border-left: 16px solid #fff; margin-left: 4px;
+        }
+        .media-card:hover .play-overlay { background: #fff; transform: scale(1.1); box-shadow: 0 0 20px rgba(255,255,255,0.4); }
+        .media-card:hover .play-overlay::after { border-left-color: #050505; }
+
+        /* PDF 슬라이드 전용 배지 레이어 */
+        .pdf-overlay {
+            position: absolute; padding: 0.6rem 1.2rem; background: rgba(59, 130, 246, 0.2);
+            border: 1px solid rgba(59, 130, 246, 0.4); border-radius: 8px; color: #93c5fd;
+            font-size: 0.85rem; font-weight: 700; font-family: var(--font-title); z-index: 2;
+        }
+
+        /* 9. 콘텐츠 메타 데이터 스펙 */
+        .media-info { padding: 2rem; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
+        .media-meta { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+        
+        .format-badge { font-size: 0.75rem; font-weight: 800; padding: 0.25rem 0.6rem; border-radius: 4px; font-family: var(--font-title); }
+        .badge-jpg, .badge-png { background: rgba(139, 92, 246, 0.15); color: #c084fc; border: 1px solid rgba(139, 92, 246, 0.3); }
+        .badge-mp4 { background: rgba(236, 72, 153, 0.15); color: #f472b6; border: 1px solid rgba(236, 72, 153, 0.3); }
+        .badge-pdf { background: rgba(59, 130, 246, 0.15); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); }
+
+        .file-size { font-size: 0.8rem; color: var(--text-sub); font-family: var(--font-title); }
+        
+        .media-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 0.6rem; line-height: 1.4; transition: 0.3s; }
+        .media-card:hover .media-title { color: #c084fc; }
+        .media-desc { font-size: 0.9rem; color: var(--text-sub); font-weight: 300; margin-bottom: 1.5rem; min-height: 44px; }
+        
+        .file-path {
+            font-size: 0.75rem; font-family: 'Courier New', Courier, monospace;
+            color: rgba(255,255,255,0.25); border-top: 1px solid rgba(255,255,255,0.05);
+            padding-top: 1rem; display: flex; justify-content: space-between; align-items: center;
+        }
+        .launch-icon { font-size: 0.9rem; opacity: 0.5; transition: 0.3s; }
+        .media-card:hover .launch-icon { opacity: 1; transform: translate(2px, -2px); }
+
+        footer { padding: 4rem 0; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); color: #444; font-size: 0.8rem; }
+
+        @media (max-width: 768px) {
+            nav { padding: 0 2rem; }
+            .archive-header { padding-top: 6rem; }
+            .archive-header h1 { font-size: 2.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="aurora-bg">
+        <div class="aurora aurora-1"></div>
+        <div class="aurora aurora-2"></div>
+    </div>
+
+    <nav>
+        <div class="logo-area">
+            <div class="logo">KIM MINJUN</div>
+            <span style="color: rgba(255,255,255,0.15); font-size: 0.8rem;">|</span>
+            <span style="font-size: 0.85rem; font-weight: 600; color: var(--text-sub); letter-spacing: 0.5px;">MEDIA HUB</span>
+        </div>
+        <a href="javascript:history.back();" class="back-btn">← 메인 페이지로 이동</a>
+    </nav>
+
+    <div class="container">
+        <header class="archive-header">
+            <h1>Media Folder <span>Archive</span></h1>
+            <p>생성형 AI 크리에이티브 리소스 보관소입니다. 미디어 프레임을 클릭하면 브라우저 내장 플레이어 및 뷰어가 포함된 최적화된 새 팝업창에서 고해상도로 원본 콘텐츠가 즉시 실행됩니다.</p>
+        </header>
+
+        <div class="filter-tabs">
+            <button class="tab-btn active" onclick="filterMedia('all')">전체보기</button>
+            <button class="tab-btn" onclick="filterMedia('image')">이미지 (JPG, PNG)</button>
+            <button class="tab-btn" onclick="filterMedia('video')">동영상 (MP4)</button>
+            <button class="tab-btn" onclick="filterMedia('pdf')">문서 (PDF 슬라이드)</button>
+        </div>
+
+        <main class="media-grid">
+
+            <article class="media-card" data-type="image" onclick="openMediaPopup('media/synth_package.jpg')">
+                <div class="thumbnail-frame">
+                    <img src="media/synth_package.jpg" alt="[SYNTH] 패키지 시안" onerror="this.src='https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80'">
+                </div>
+                <div class="media-info">
+                    <div>
+                        <div class="media-meta">
+                            <span class="format-badge badge-jpg">.JPG IMAGE</span>
+                            <span class="file-size">4.2 MB</span>
+                        </div>
+                        <h3 class="media-title">[SYNTH] 사이버펑크 스타일 주류 패키지 그래픽</h3>
+                        <p class="media-desc">AI 텍스처 제너레이션 기법과 아도비 일러스트레이터의 도면 시스템을 결합해 빌드업한 미래지향적 가상 패키지 그래픽 디자인 리소스입니다.</p>
+                    </div>
+                    <div class="file-path">
+                        <span>📂 media/synth_package.jpg</span>
+                        <span class="launch-icon">↗</span>
+                    </div>
+                </div>
+            </article>
+
+            <article class="media-card" data-type="video" onclick="openMediaPopup('media/chronos_video.mp4')">
+                <div class="thumbnail-frame">
+                    <div class="play-overlay"></div>
+                    <img src="media/chronos_thumbnail.jpg" alt="[CHRONOS] 영상 루프" onerror="this.src='https://images.unsplash.com/photo-1614064641938-3bbee52942c7?auto=format&fit=crop&w=600&q=80'">
+                </div>
+                <div class="media-info">
+                    <div>
+                        <div class="media-meta">
+                            <span class="format-badge badge-mp4">.MP4 VIDEO</span>
+                            <span class="file-size">24.5 MB</span>
+                        </div>
+                        <h3 class="media-title">[CHRONOS] 일관성 제어 기반 AI 미니 시네마틱 루프 영상</h3>
+                        <p class="media-desc">Runway Gen-2 모델 및 인물 비주얼 일관성 유지(Consistency) 제어 프롬프트 처리를 검증하기 위한 15초 분량의 고해상도 모션 비디오 루프 파일입니다.</p>
+                    </div>
+                    <div class="file-path">
+                        <span>📂 media/chronos_video.mp4</span>
+                        <span class="launch-icon">↗</span>
+                    </div>
+                </div>
+            </article>
+
+            <article class="media-card" data-type="pdf" onclick="openMediaPopup('media/neural_dashboard.pdf')">
+                <div class="thumbnail-frame">
+                    <div class="pdf-overlay">SLIDE VIEW</div>
+                    <img src="media/neural_thumbnail.jpg" alt="[NEURAL] 기획서" onerror="this.src='https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80'">
+                </div>
+                <div class="media-info">
+                    <div>
+                        <div class="media-meta">
+                            <span class="format-badge badge-pdf">.PDF SLIDES</span>
+                            <span class="file-size">12.8 MB</span>
+                        </div>
+                        <h3 class="media-title">[NEURAL] AI 창작 플랫폼 대시보드 UX/UI 설계 기획 스펙북</h3>
+                        <p class="media-desc">정보 아키텍처(IA) 단계를 거쳐 사용자 시선 흐름을 정형화한 총 16페이지 분량의 웹 대시보드 인터페이스 디자인 와이어프레임 기획서 문서입니다.</p>
+                    </div>
+                    <div class="file-path">
+                        <span>📂 media/neural_dashboard.pdf</span>
+                        <span class="launch-icon">↗</span>
+                    </div>
+                </div>
+            </article>
+
+            <article class="media-card" data-type="image" onclick="openMediaPopup('media/prompt_faces.png')">
+                <div class="thumbnail-frame">
+                    <img src="media/prompt_faces.png" alt="Faces 시리즈" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80'">
+                </div>
+                <div class="media-info">
+                    <div>
+                        <div class="media-meta">
+                            <span class="format-badge badge-png">.PNG IMAGE</span>
+                            <span class="file-size">8.1 MB</span>
+                        </div>
+                        <h3 class="media-title">AI 제너레이티브 인물 프롬프트 엔지니어링 포트레이트 세트</h3>
+                        <p class="media-desc">미드저니(Midjourney)의 정교한 텍스처 제어를 통해 고품질 피부 질감과 빛을 연출해 낸 그래픽 합성용 고해상도 이미지 포트레이트 소스 세트입니다.</p>
+                    </div>
+                    <div class="file-path">
+                        <span>📂 media/prompt_faces.png</span>
+                        <span class="launch-icon">↗</span>
+                    </div>
+                </div>
+            </article>
+
+        </main>
+    </div>
+
+    <footer>
+        <p>© 2026 KIM MINJUN Portfolio Media Hub. All Media Assets Are Stored Locally.</p>
+    </footer>
+
+    <script>
+        // 1. 카테고리 분류 퀵 필터 기능
+        function filterMedia(type) {
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            const cards = document.querySelectorAll('.media-card');
+            cards.forEach(card => {
+                if (type === 'all' || card.getAttribute('data-type') === type) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // 2. 단독형 새 팝업 윈도우 생성 및 파일 즉시 실행 제어 기능
+        function openMediaPopup(filePath) {
+            // 원본 파일이 해상도와 화면 비율을 유지하며 실행될 수 있도록 화면 중앙 정렬 팝업 스펙 적용
+            const width = 1100;
+            const height = 750;
+            const left = (window.screen.width - width) / 2;
+            const top = (window.screen.height - height) / 2;
+            
+            // 브라우저가 기본 지원하는 mp4 플레이어 및 pdf 내장 컨트롤러가 새 창에서 최적 연동되어 바로 구동됩니다.
+            window.open(
+                filePath, 
+                '_blank', 
+                `width=${width},height=${height},left=${left},top=${top},resizable=yes,scrollbars=yes,status=no,toolbar=no`
+            );
+        }
+    </script>
+</body>
+</html>
