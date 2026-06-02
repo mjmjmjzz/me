@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI CONTENT GALLERY</title>
+    <style>
+        /* 기본 스타일 및 배경 설정 */
+        body {
+            margin: 0;
+            padding: 50px 20px;
+            background-image: url('배경.jpeg'); /* 배경 이미지 변경 */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+            color: #2c3e50;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* 메인 타이틀 (AI CONTENT) */
+        .main-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            margin-bottom: 50px;
+            color: #1a1a1a;
+            text-align: center;
+            position: relative;
+        }
+
+        /* 전체 레이아웃 컨테이너 (그리드) */
+        .gallery-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            max-width: 1300px;
+            width: 100%;
+        }
+
+        /* 강철새 섹션은 가로형 영상이므로 상단 전체 너비 차지 */
+        .section-card.full-width {
+            grid-column: span 2;
+        }
+
+        /* 개별 섹션 카드 스타일 (Glassmorphism) */
+        .section-card {
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .section-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        /* 섹션 제목 */
+        .section-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 12px;
+            color: #111111;
+        }
+
+        /* 섹션 설명 텍스트 */
+        .section-desc {
+            font-size: 0.95rem;
+            color: #666666;
+            text-align: center;
+            margin-bottom: 25px;
+            line-height: 1.5;
+            word-break: keep-all;
+        }
+
+        /* 비디오 출력 영역 */
+        .video-wrapper {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            width: 100%;
+        }
+
+        /* 비디오 기본 스타일 */
+        video {
+            border-radius: 14px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+            background-color: #000;
+            object-fit: contain;
+        }
+
+        /* 가로형 영상 스타일 (강철새) */
+        .video-horizontal {
+            width: 100%;
+            max-width: 800px;
+            height: auto;
+            margin: 0 auto;
+        }
+
+        /* 세로형 숏폼 영상 스타일 (향수, 틴트, 패션) */
+        .video-vertical {
+            width: 100%;
+            max-height: 500px;
+        }
+
+        /* 인플루언서 섹션 내부의 2열 정렬 */
+        .double-video {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            width: 100%;
+        }
+
+        /* 반응형 미디어 쿼리 (태블릿 및 모바일) */
+        @media (max-width: 1024px) {
+            .gallery-container {
+                grid-template-columns: 1fr;
+            }
+            .section-card.full-width {
+                grid-column: span 1;
+            }
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 30px 15px;
+            }
+            .main-title {
+                font-size: 2rem;
+                margin-bottom: 30px;
+            }
+            .section-card {
+                padding: 20px;
+            }
+            .double-video {
+                grid-template-columns: 1fr;
+            }
+            .video-vertical {
+                max-height: 400px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 메인 타이틀 -->
+    <div class="main-title">AI CONTENT</div>
+
+    <div class="gallery-container">
+
+        <!-- [1] 강철새의 변화 숏폼 (가로형 와이드 배치) -->
+        <div class="section-card full-width">
+            <div>
+                <div class="section-title">강철새의 변화 숏폼</div>
+                <div class="section-desc">로봇 독수리가 기계 파편을 깨고 실제 독수리로 변환되는 고화질 광고 영상 (Gemini, Veo 3)</div>
+            </div>
+            <div class="video-wrapper">
+                <video class="video-horizontal" controls preload="metadata">
+                    <source src="강철새.mp4" type="video/mp4">
+                    브라우저가 비디오 태그를 지원하지 않습니다.
+                </video>
+            </div>
+        </div>
+
+        <!-- [2] AI 인플루언서 광고 숏폼 (향수 & 틴트 2개 비디오 내장) -->
+        <div class="section-card">
+            <div>
+                <div class="section-title">AI 인플루언서 광고 숏폼</div>
+                <div class="section-desc">AI 가상 모델 페르소나를 디자인하여 완성한 향수 및 틴트 브랜드 광고 영상 (Gemini, Veo 3)</div>
+            </div>
+            <div class="double-video">
+                <video class="video-vertical" controls preload="metadata">
+                    <source src="향수.mov" type="video/mp4">
+                </video>
+                <video class="video-vertical" controls preload="metadata">
+                    <source src="틴.mov" type="video/mp4">
+                </video>
+            </div>
+        </div>
+
+        <!-- [3] AI 모델 룩북 영상 (패션) -->
+        <div class="section-card">
+            <div>
+                <div class="section-title">AI 모델 룩북 영상</div>
+                <div class="section-desc">AI 가상 모델 및 다양한 패션 브랜드 룩북 영상 (Gemini, Veo 3)</div>
+            </div>
+            <div class="video-wrapper">
+                <video class="video-vertical" controls preload="metadata">
+                    <source src="패션.mov" type="video/mp4">
+                    브라우저가 비디오 태그를 지원하지 않습니다.
+                </video>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
